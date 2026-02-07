@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "Zakonchil",
+  "version": "1.0",
+  "description": "Notifies you via Telegram when ChatGPT finishes generating a response.",
+  "permissions": ["storage"],
+  "host_permissions": [
+    "https://chatgpt.com/*",
+    "https://api.telegram.org/*"
+  ],
+  "action": {
+    "default_popup": "popup/popup.html"
+  },
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://chatgpt.com/*"],
+      "js": ["scripts/content.js"]
+    }
+  ]
+}

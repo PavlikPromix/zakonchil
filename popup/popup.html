@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Zakonchil Settings</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Zakonchil</h1>
+    <p class="description">Telegram Notification Settings</p>
+    
+    <div class="field">
+      <label for="botToken">Telegram Bot Token</label>
+      <input type="password" id="botToken" placeholder="123456789:ABCDE...">
+    </div>
+    
+    <div class="field">
+      <label for="userId">Telegram User ID</label>
+      <input type="text" id="userId" placeholder="123456789">
+    </div>
+    
+    <div class="actions">
+      <button id="saveBtn" class="primary">Save Settings</button>
+      <button id="testBtn">Test Notification</button>
+    </div>
+    
+    <div id="status" class="status"></div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
