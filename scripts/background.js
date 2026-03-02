@@ -12,7 +12,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 });
 
 async function handleGenerationFinished() {
-  const settings = await chrome.storage.local.get(['botToken', 'userId']);
+  const settings = await chrome.storage.local.get(['botToken', 'userId', 'notificationsEnabled']);
+  
+  if (settings.notificationsEnabled === false) {
+    console.log('Zakonchil: Notifications are disabled, not sending.');
+    return;
+  }
   
   if (!settings.botToken || !settings.userId) {
     console.error('Zakonchil: Bot Token or User ID not configured.');
