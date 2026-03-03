@@ -59,25 +59,30 @@ function notifyCompletion() {
 
 // Function to inject the notification toggle next to the Dictate button
 function injectNotificationToggle() {
-  // Look for the target container using XPath
-  const xpath = '/html/body/div[2]/div[1]/div/div[2]/div/main/div/div/div[2]/div[1]/div/div/div[2]/form/div[2]/div/div[4]/div';
   let targetContainer = null;
-  try {
-    const result = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
-    targetContainer = result.singleNodeValue;
-  } catch (e) {
-    // Fallback if XPath fails
+  
+  // Look for the Dictate or Voice button using various possible selectors ChatGPT might use
+  const dictateButton = document.querySelector('button[aria-label="Dictate button"]') || 
+                        document.querySelector('button[aria-label="Dictate"]') || 
+                        document.querySelector('button[aria-label="Voice conversation"]') ||
+                        document.querySelector('button[aria-label="Voice input"]') ||
+                        document.querySelector('button[data-testid="voice-input-button"]');
+  
+  if (dictateButton) {
+    // Try to find the flex container that holds the buttons
+    targetContainer = dictateButton.closest('div.ms-auto.flex') || 
+                      dictateButton.closest('div.flex.items-center') ||
+                      dictateButton.parentElement;
   }
 
   if (!targetContainer) {
-    // Look for the Dictate or Voice button using various possible selectors ChatGPT might use
-    const dictateButton = document.querySelector('button[aria-label="Dictate"]') || 
-                          document.querySelector('button[aria-label="Voice conversation"]') ||
-                          document.querySelector('button[aria-label="Voice input"]') ||
-                          document.querySelector('button[data-testid="voice-input-button"]');
-    
-    if (dictateButton) {
-      targetContainer = dictateButton.parentNode;
+    // Fallback if XPath is needed
+    const xpath = '/html/body/div[2]/div[1]/div/div[2]/div/main/div/div/div[2]/div[1]/div/div/div[2]/form/div[2]/div/div[4]/div';
+    try {
+      const result = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
+      targetContainer = result.singleNodeValue;
+    } catch (e) {
+      // Fallback if XPath fails
     }
   }
   
