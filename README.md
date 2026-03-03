@@ -12,6 +12,7 @@ If you frequently ask ChatGPT complex questions or generate long text that takes
 - **Telegram Integration:** Sends a direct message to your Telegram account via a custom bot.
 - **In-page Toggle:** Injects a convenient on/off switch right into the ChatGPT interface (next to the dictate button) so you can quickly enable or disable notifications for specific prompts.
 - **Popup Dashboard:** Easy configuration of your Telegram Bot Token and Chat ID, complete with a test notification button.
+- **Customizable Notifications:** Set your own custom notification text.
 
 ## Installation
 
@@ -46,8 +47,9 @@ To receive notifications, you need to create a Telegram bot and get your Chat ID
 1. Click the Zakónchil extension icon in your Chrome toolbar to open the popup.
 2. Paste the **Bot Token** you got from BotFather.
 3. Paste the **User ID** you got from the ID bot.
-4. Click **Save Settings**.
-5. Click **Test Notification** to ensure everything is working. You should receive a message from your bot in Telegram! *(Note: You must start a conversation with your newly created bot in Telegram first before it can send you messages. Go to your bot and press "Start").*
+4. (Optional) Customize the **Notification Text**.
+5. Click **Save Settings**.
+6. Click **Test Notification** to ensure everything is working. You should receive a message from your bot in Telegram! *(Note: You must start a conversation with your newly created bot in Telegram first before it can send you messages. Go to your bot and press "Start").*
 
 ## How to Use
 
@@ -55,7 +57,7 @@ To receive notifications, you need to create a Telegram bot and get your Chat ID
 2. Look for the Zakónchil toggle switch injected near the input area (next to the voice/dictate button).
 3. Ensure it is toggled **ON** (green).
 4. Send your prompt to ChatGPT.
-5. When ChatGPT finishes typing out its response, you will receive a Telegram message: `"✅ ChatGPT закончил генерацию ответа!"`
+5. When ChatGPT finishes typing out its response, you will receive a Telegram message (by default: `"✅ ChatGPT закончил генерацию ответа!"`, or your custom text).
 
 ## Permissions
 

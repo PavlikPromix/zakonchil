@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Zakonchil",
-  "version": "1.0",
+  "version": "1.6",
   "description": "Notifies you via Telegram when ChatGPT finishes generating a response.",
   "permissions": ["storage"],
   "host_permissions": [

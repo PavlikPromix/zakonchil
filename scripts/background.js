@@ -4,7 +4,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'GENERATION_FINISHED') {
     handleGenerationFinished();
   } else if (request.action === 'TEST_NOTIFICATION') {
-    sendTelegramMessage(request.data.botToken, request.data.userId, "🔔 Zakonchil: Test notification is working!")
+    const textToSend = request.data.notificationText || "🔔 Zakonchil: Test notification is working!";
+    sendTelegramMessage(request.data.botToken, request.data.userId, textToSend)
       .then(() => sendResponse({ success: true }))
       .catch((error) => sendResponse({ success: false, error: error.message }));
     return true; // Keep message channel open for async response
@@ -12,7 +13,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 });
 
 async function handleGenerationFinished() {
-  const settings = await chrome.storage.local.get(['botToken', 'userId', 'notificationsEnabled']);
+  const settings = await chrome.storage.local.get(['botToken', 'userId', 'notificationsEnabled', 'notificationText']);
   
   if (settings.notificationsEnabled === false) {
     console.log('Zakonchil: Notifications are disabled, not sending.');
@@ -25,10 +26,11 @@ async function handleGenerationFinished() {
   }
 
   try {
+    const textToSend = settings.notificationText || "✅ ChatGPT закончил генерацию ответа!";
     await sendTelegramMessage(
       settings.botToken, 
       settings.userId, 
-      "✅ ChatGPT закончил генерацию ответа!"
+      textToSend
     );
     console.log('Zakonchil: Notification sent to Telegram.');
   } catch (error) {

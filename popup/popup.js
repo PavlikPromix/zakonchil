@@ -1,15 +1,17 @@
 document.addEventListener('DOMContentLoaded', () => {
   const botTokenInput = document.getElementById('botToken');
   const userIdInput = document.getElementById('userId');
+  const notificationTextInput = document.getElementById('notificationText');
   const notificationsEnabledInput = document.getElementById('notificationsEnabled');
   const saveBtn = document.getElementById('saveBtn');
   const testBtn = document.getElementById('testBtn');
   const statusDiv = document.getElementById('status');
 
   // Load saved settings
-  chrome.storage.local.get(['botToken', 'userId', 'notificationsEnabled'], (result) => {
+  chrome.storage.local.get(['botToken', 'userId', 'notificationText', 'notificationsEnabled'], (result) => {
     if (result.botToken) botTokenInput.value = result.botToken;
     if (result.userId) userIdInput.value = result.userId;
+    if (result.notificationText) notificationTextInput.value = result.notificationText;
     if (result.notificationsEnabled !== undefined) {
       notificationsEnabledInput.checked = result.notificationsEnabled;
     } else {
@@ -28,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
   saveBtn.addEventListener('click', () => {
     const botToken = botTokenInput.value.trim();
     const userId = userIdInput.value.trim();
+    const notificationText = notificationTextInput.value.trim();
     const notificationsEnabled = notificationsEnabledInput.checked;
 
     if (!botToken || !userId) {
@@ -35,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    chrome.storage.local.set({ botToken, userId, notificationsEnabled }, () => {
+    chrome.storage.local.set({ botToken, userId, notificationText, notificationsEnabled }, () => {
       showStatus('Settings saved!', 'success');
     });
   });
@@ -44,6 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
   testBtn.addEventListener('click', () => {
     const botToken = botTokenInput.value.trim();
     const userId = userIdInput.value.trim();
+    const notificationText = notificationTextInput.value.trim();
 
     if (!botToken || !userId) {
       showStatus('Save settings first!', 'error');
@@ -55,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Send message to background to handle the fetch
     chrome.runtime.sendMessage({ 
       action: 'TEST_NOTIFICATION',
-      data: { botToken, userId }
+      data: { botToken, userId, notificationText }
     }, (response) => {
       if (response && response.success) {
         showStatus('Test message sent!', 'success');
